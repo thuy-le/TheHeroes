@@ -23,12 +23,12 @@ public class ImagePath {
     public static String DEFENSE = "images/defense.png";
     public static String SKIP = "images/skip.png";
 
-    public static String FIGHTER = "fighter.jpg";
-    public static String HEALER = "healer.jpg";
-    public static String INFANTRY = "infantry.jpg";
-    public static String MAGE = "mage.jpg";
-    public static String MAIDEN ="maiden.jpg";
-    public static String SOLDIER = "soldier.jpg";
-    public static String SPELLCASTER = "spellcaster.jpg";
-    public static String THIEF = "thief.jpg";
+    public static String FIGHTER = "images/fighter.jpg";
+    public static String HEALER = "images/healer.jpg";
+    public static String INFANTRY = "images/infantry.jpg";
+    public static String MAGE = "images/mage.jpg";
+    public static String MAIDEN ="images/maiden.jpg";
+    public static String SOLDIER = "images/soldier.jpg";
+    public static String SPELLCASTER = "images/spellcaster.jpg";
+    public static String THIEF = "images/thief.jpg";
 }

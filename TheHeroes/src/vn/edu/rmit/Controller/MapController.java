@@ -2,6 +2,7 @@ package vn.edu.rmit.Controller;
 
 import vn.edu.rmit.GUI.MainFrame;
 import vn.edu.rmit.Model.GameEngine;
+import vn.edu.rmit.Model.Hero.Hero;
 import vn.edu.rmit.Utilities.GroundType;
 import vn.edu.rmit.Utilities.HexGrid;
 import vn.edu.rmit.Utilities.Hexagon;
@@ -22,23 +23,22 @@ public class MapController {
     private HexGrid hexGrid;
     private MainFrame mainFrame;
     private GameEngine gameEngine;
-//    private BackupEngine gameEngine;
     private List<Hexagon> hexesRanges;
 
-    public MapController(HexGrid hexGrid, MainFrame mainFrame, GameEngine chatEngine) {
+    public MapController(HexGrid hexGrid, MainFrame mainFrame, GameEngine gameEngine) {
         this.hexGrid = hexGrid;
         this.mainFrame = mainFrame;
-        this.gameEngine = chatEngine;
- //       this.gameEngine = gameEngine;
+        this.gameEngine = gameEngine;
         init();
     }
 
     private void init() {
         hexGrid.addMouseListener(new HexOnClick());
-        mainFrame.setMoveAction(new MoveOnClick());
+        mainFrame.getButtons().get(0).addMouseListener(new MoveOnClick());
         JTextField txt = mainFrame.getTextField();
         txt.addActionListener(new ChatAction());
         mainFrame.addWindowListener(new WindowOnClose());
+        mainFrame.getHeroAvatar().addMouseListener(new HeroOnClick());
     }
 
     private class HexOnClick extends MouseAdapter {
@@ -83,6 +83,21 @@ public class MapController {
                 gameEngine.writeChatMSG(s);
                 txt.setText("");
             }
+        }
+    }
+
+    private class HeroOnClick extends MouseAdapter{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            List<Hero> heroes = mainFrame.getHeroes();
+            if(heroes == null) return;
+            String s = "";
+            for(int i = 0; i < heroes.size(); i++){
+                s += heroes.get(i).getName();
+                s += "\n";
+            }
+            JOptionPane.showMessageDialog(null, s);
         }
     }
 

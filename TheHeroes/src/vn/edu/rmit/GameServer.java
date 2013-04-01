@@ -36,7 +36,7 @@ public class GameServer {
                     }
                     if(i == MAX_CLIENT){
                         ObjectOutputStream os = new ObjectOutputStream(clientSocket.getOutputStream());
-                        os.writeObject("GameServer is too busy, sorry");
+                        os.writeObject("Game server is too busy, sorry");
                         os.close();
                         clientSocket.close();
                     }

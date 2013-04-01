@@ -31,25 +31,13 @@ public class GameClient implements Runnable {
     private MapController mapController;
     private static ObjectOutputStream os = null;
     private static ObjectInputStream is = null;
-    private static BufferedReader inputLine = null;
 
     public static void main(String[] args) {
         GameClient client = new GameClient();
-        try {
-            client.initializeConnection();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        client.initializeConnection();
         if (socket != null && os != null && is != null) {
             Thread thread = new Thread(new GameClient());
             thread.start();
-            while (true) {
-                try {
-                    os.writeObject(inputLine.readLine());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
         }
     }
 
@@ -60,31 +48,23 @@ public class GameClient implements Runnable {
         ctx = ApplicationContextUtils.getApplicationContext();
         mainFrame = (MainFrame) ctx.getBean("MainFrame");
         hexGrid = (HexGrid) ctx.getBean("HexGrid");
-        Server server = new Server(socket,is,os);
-        GameEngine chatEngine = new GameEngine(server);
-        //BackupEngine gameEngine = new BackupEngine(server);
-        mapController = new MapController(hexGrid, mainFrame, chatEngine);
-        /**/
-        chatEngine.addObserver(mainFrame);
-        chatEngine.addObserver(hexGrid);
-        /**/
-        chatEngine.read();
+        Server server = new Server(socket, is, os);
+        GameEngine gameEngine = new GameEngine(server);
+        mapController = new MapController(hexGrid, mainFrame, gameEngine);
+        gameEngine.addObserver(mainFrame);
+        gameEngine.addObserver(hexGrid);
+        gameEngine.read();
     }
 
-    private void initializeConnection()
-            throws UnknownHostException, IOException {
-        socket = new Socket(HOST, PORT);
-        inputLine = new BufferedReader(new InputStreamReader(System.in));
-        os = new ObjectOutputStream(socket.getOutputStream());
-        is = new ObjectInputStream(socket.getInputStream());
-    }
-
-    public void closeConnection() {
+    private void initializeConnection() {
         try {
-            socket.close();
+            socket = new Socket(HOST, PORT);
+            os = new ObjectOutputStream(socket.getOutputStream());
+            is = new ObjectInputStream(socket.getInputStream());
+        } catch (UnknownHostException e) {
+            System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.exit(0);
     }
 }

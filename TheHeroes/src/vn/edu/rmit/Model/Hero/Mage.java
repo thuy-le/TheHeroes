@@ -4,6 +4,7 @@ import vn.edu.rmit.Model.Skill.AttackAll;
 import vn.edu.rmit.Model.Skill.Skill;
 import vn.edu.rmit.Utilities.ImagePath;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,9 @@ public class Mage extends Hero {
         setMove(2);
         setRange(5);
         setMana(100);
-        setSkills((List<Skill>) new AttackAll());
+        List<Skill> skills = new ArrayList<Skill>();
+        skills.add(new AttackAll());
+        setSkills(skills);
         setImagePath(ImagePath.MAGE);
     }
 }

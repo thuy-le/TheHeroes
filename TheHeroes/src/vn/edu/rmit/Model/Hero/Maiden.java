@@ -1,9 +1,11 @@
 package vn.edu.rmit.Model.Hero;
 
+import vn.edu.rmit.Model.Skill.AttackAll;
 import vn.edu.rmit.Model.Skill.HealAll;
 import vn.edu.rmit.Model.Skill.Skill;
 import vn.edu.rmit.Utilities.ImagePath;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +25,9 @@ public class Maiden extends Hero {
         setMove(2);
         setRange(5);
         setMana(50);
-        setSkills((List<Skill>) new HealAll());
+        List<Skill> skills = new ArrayList<Skill>();
+        skills.add(new HealAll());
+        setSkills(skills);
         setImagePath(ImagePath.MAIDEN);
     }
 }

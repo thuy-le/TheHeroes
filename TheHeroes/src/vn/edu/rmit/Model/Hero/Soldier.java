@@ -4,6 +4,7 @@ import vn.edu.rmit.Model.Skill.DoubleAttack;
 import vn.edu.rmit.Model.Skill.Skill;
 import vn.edu.rmit.Utilities.ImagePath;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,9 @@ public class Soldier extends Hero {
         setMove(5);
         setRange(1);
         setMana(25);
-        setSkills((List<Skill>) new DoubleAttack());
+        List<Skill> skills = new ArrayList<Skill>();
+        skills.add(new DoubleAttack());
+        setSkills(skills);
         setImagePath(ImagePath.SOLDIER);
     }
 }

@@ -71,6 +71,7 @@
 
     <bean id="Server" class="vn.edu.rmit.GameServer"></bean>
     <bean id="GameClient" class="vn.edu.rmit.GameClient" scope="prototype"></bean>
+    <bean id="GamePane" class="vn.edu.rmit.GUI.GamePane"></bean>
 
     <!--Hexagon grid. A grid contains multiple hexagons. Takes 1 constructor argument: HexagonType-->
     <bean id="HexGrid" class="vn.edu.rmit.Utilities.HexGrid">
