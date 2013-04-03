@@ -9,12 +9,13 @@ package vn.edu.rmit.Utilities;
 public class ImagePath {
     public static String BACKGROUND = "images/background.jpg";
     public static String GRASS = "images/grass.png";
-    public static String MOUNTAIN = "";
-    public static String WATER = "";
+    public static String MOUNTAIN = "images/mountain.png";
+    public static String WATER = "images/water.png";
+    public static String TREE = "images/tree.png";
     public static String HOLE = "";
 
     public static String WARRIOR1 = "images/warrior1.jpg";
-    public static String W1 = "images/w1.png";
+    public static String W1 = "images/w1straight1.png";
     public static String W2 = "images/w2.png";
     public static String MOVE_AVAIL = "images/move_avail.png";
 

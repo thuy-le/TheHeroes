@@ -23,6 +23,7 @@ public class CustomPanel extends JPanel {
     private int arcW;
     private int arcH;
     private Stroke stroke;
+    private int strokeWidth;
 
     public CustomPanel() {
         this.x = 0;
@@ -31,9 +32,9 @@ public class CustomPanel extends JPanel {
         this.height = super.getHeight();
         this.alpha = .5f;
         this.background = Colour.GREEN_DARK;
-        this.strokecolor = Colour.GREEN_DARK;
         this.arcW = 0;
         this.arcH = 0;
+        this.strokeWidth = 1;
         setOpaque(false);
     }
 
@@ -41,6 +42,10 @@ public class CustomPanel extends JPanel {
         this.x = x;
         this.y = y;
         repaint();
+    }
+
+    public Point getPosition(){
+        return new Point(x,y);
     }
 
     public void setPanelSize(int width, int height) {
@@ -76,8 +81,8 @@ public class CustomPanel extends JPanel {
         repaint();
     }
 
-    public void setStroke(Stroke s, Color c) {
-        this.stroke = s;
+    public void setStroke(int width, Color c) {
+        strokeWidth = width;
         this.strokecolor = c;
         repaint();
     }
@@ -88,21 +93,26 @@ public class CustomPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.translate(x, y);
-        if (stroke != null) {
-            g2d.setStroke(stroke);
-        }
+        stroke = new BasicStroke(strokeWidth);
+        g2d.setStroke(stroke);
         g2d.setColor(strokecolor);
-        g2d.drawRoundRect(0, 0, width, height, arcW, arcH);
+        g2d.drawRoundRect(x, y, width + strokeWidth, height + strokeWidth, arcW, arcH);
         if (background != null) {
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
             g2d.setColor(background);
-            g2d.fillRoundRect(0, 0, width, height, arcW, arcH);
+            g2d.fillRoundRect(x + strokeWidth, y + strokeWidth, width, height, arcW, arcH);
         }
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
     }
 
+    public void setPanelPosition(final int x, final int y) {
+        this.x = x;
+        this.y = y;
+        repaint();
+    }
+
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(width + 1, height + 1);
+        return new Dimension(width + x + strokeWidth +1, height + y + strokeWidth +1);
     }
 }

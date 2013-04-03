@@ -49,6 +49,7 @@ public class MapController {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
+            /*
             for (int i = 0; i < hexGrid.getHexagons().size(); i++) {
                 Shape s = hexGrid.getHexagons().get(i).getHexagon();
                 if (s.contains(e.getX(), e.getY())) {
@@ -60,10 +61,18 @@ public class MapController {
                     hexGrid.repaint();
                 }
             }
+            */
+            JOptionPane.showMessageDialog(null, "Clicked");
+            for (int i = 0; i < hexGrid.getHexagons().size(); i++) {
+                Hexagon h = hexGrid.getHexagons().get(i);
+                if (h.getHexagon().contains(e.getPoint().x, e.getPoint().y)) {
+                    JOptionPane.showMessageDialog(null, h.getID());
+                }
+            }
         }
     }
 
-    private List<Hexagon> findPath(List<Hexagon> hexes, Hexagon prev, Hexagon next){
+    private List<Hexagon> findPath(List<Hexagon> hexes, Hexagon prev, Hexagon next) {
         List<Hexagon> path = new ArrayList<Hexagon>();
         Point2D.Double current = prev.getCenter();
         for (int i = 0; i < 6; i++) {
@@ -104,14 +113,14 @@ public class MapController {
         }
     }
 
-    private class HeroOnClick extends MouseAdapter{
+    private class HeroOnClick extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             List<Hero> heroes = mainFrame.getHeroes();
-            if(heroes == null) return;
+            if (heroes == null) return;
             String s = "";
-            for(int i = 0; i < heroes.size(); i++){
+            for (int i = 0; i < heroes.size(); i++) {
                 s += heroes.get(i).getName();
                 s += "\n";
             }
@@ -126,13 +135,13 @@ public class MapController {
         }
     }
 
-    private void toggleRange(){
-        if(hexesRanges == null) return;
-        for(int i = 0; i < hexGrid.getHexagons().size(); i++){
+    private void toggleRange() {
+        if (hexesRanges == null) return;
+        for (int i = 0; i < hexGrid.getHexagons().size(); i++) {
             Hexagon h = hexGrid.getHexagons().get(i);
-            for (int j = 0; j < hexesRanges.size(); j++){
-                if(!h.getID().equals(hexesRanges.get(j).getID())) continue;
-                if(h.getGroundType() == GroundType.GRASS)
+            for (int j = 0; j < hexesRanges.size(); j++) {
+                if (!h.getID().equals(hexesRanges.get(j).getID())) continue;
+                if (h.getGroundType() == GroundType.GRASS)
                     h.setGroundType(GroundType.MOVE_AVAIL);
                 else
                     h.setGroundType(GroundType.GRASS);

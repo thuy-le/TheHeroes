@@ -15,6 +15,7 @@ public class Avatar extends CustomPanel {
 
     public Avatar(){
         super();
+        setPosition(0,0);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
@@ -29,6 +30,9 @@ public class Avatar extends CustomPanel {
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         BufferedImage img = Utilities.getBackgroundImage(imagePath);
         g2d.setComposite(AlphaComposite.SrcAtop);
-        g2d.drawImage(img,3,3, getPanelSize().width-7, getPanelSize().height-7,null);
+        g2d.drawImage(img, getPosition().x + 3, getPosition().y + 3, getPanelSize().width - getPosition().x,
+                getPanelSize().height - getPosition().y,null);
     }
+
+
 }

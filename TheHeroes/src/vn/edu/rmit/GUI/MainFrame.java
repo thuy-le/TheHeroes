@@ -64,15 +64,22 @@ public class MainFrame extends JFrame implements Observer {
         map = (HexGrid) ctx.getBean("HexGrid");
         exit = (CustomButton) ctx.getBean("Button");
         gamePane = (GamePane) ctx.getBean("GamePane");
+        JScrollPane sp = new JScrollPane(map);
+        sp.setOpaque(false);
+        sp.getViewport().setBorder(null);
+        sp.setBorder(null);
+        sp.getViewport().setOpaque(false);
+        map.setAutoscrolls(true);
         loginForm = new LoginForm();
         setLayout();
         /*
         Adding components
          */
-        //add(exit, "0, 0"); //col,row
-        //add(map, "0, 1");
-        //add(gamePane, "0, 2");
-        add(loginForm, "0, 1");
+        add(exit, "0, 0"); //col,row
+        add(sp, "0, 1");
+        add(gamePane, "0, 2");
+        sp.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
+        //add(loginForm, "0, 1");
         configAppearance();
         /*
         Frame configuration
@@ -95,8 +102,8 @@ public class MainFrame extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof GameEngine) {
             if (((GameEngine) o).getChatMSG() != null) {
-                gamePane.appendText("\n");
                 gamePane.appendText(((GameEngine) o).getChatMSG());
+                gamePane.appendText("\n");
                 gamePane.setTextAreaCaretPosition(gamePane.getTextArea().getDocument().getLength());
                 ((GameEngine) o).setChatMSG(null);
             }
@@ -151,7 +158,7 @@ public class MainFrame extends JFrame implements Observer {
         return heroes;
     }
 
-    public List<Avatar> getButtons(){
+    public List<ActionButton> getButtons(){
         return gamePane.getButtons();
     }
 
@@ -162,6 +169,7 @@ public class MainFrame extends JFrame implements Observer {
         /*Exit button*/
         exit.setPosition(getFrameWidth() / 2 - exit.getButtonWidth() / 2, 0);
         exit.setText("Exit");
+        exit.setStroke(new BasicStroke(1), Colour.GREY_LIGHT.brighter());
     }
 
     /**
@@ -169,7 +177,7 @@ public class MainFrame extends JFrame implements Observer {
      */
     private void setLayout() {
         double size[][] = {{TableLayout.FILL}, //cols
-                {36, TableLayout.FILL, 120}}; //rows
+                {36, TableLayout.FILL, 140}}; //rows
         setLayout(new TableLayout(size));
     }
 }

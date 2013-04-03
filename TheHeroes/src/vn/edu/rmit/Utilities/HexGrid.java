@@ -50,8 +50,8 @@ public class HexGrid extends JPanel implements Observer {
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .0f));
         super.paintComponent(g2d);
         w = getWidth();
-        h = getHeight();
-        side = h / 22;
+        h = getHeight() + 30;
+        side = h / 30;
         center = new Point2D.Double(w / 2, h / 2);
         bounds = getBounds();
         minDistance = side / 4;
@@ -61,6 +61,10 @@ public class HexGrid extends JPanel implements Observer {
         Iterator it = hexagons.listIterator();
         for (; it.hasNext(); ) {
             Hexagon h = (Hexagon) it.next();
+            if(h.getGroundType() == GroundType.MOUNTAIN || h.getGroundType() == GroundType.TREE) {
+                h.drawHexagon(g2d);
+                continue;
+            }
             if (initID != null && initID.equals(h.getID())) {
                 h.setGroundType(GroundType.WARRIOR1);
                 h.drawHexagon(g2d);
@@ -88,7 +92,7 @@ public class HexGrid extends JPanel implements Observer {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(getParent().getWidth(), getParent().getHeight() - 300);
+        return new Dimension(getParent().getWidth(), getParent().getHeight() + 30);
     }
 
     private void init() {

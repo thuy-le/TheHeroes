@@ -41,6 +41,27 @@ public class Hexagon implements Serializable {
     private Point2D.Double center;
     private Shape hexagon;
     private Rectangle2D bounds;
+    private String trees[] = {
+            "367","328","287","243","198","155","156","157","666","634","604","572",
+            "462","428","392","354","340","300","299","257","213","168","126","244",
+            "72","73","106","638","608","639","107","108","109","542","511","480",
+            "105","104","71","69","45","99","97","609","577","576","546","545","513",
+            "544","145","146","189","246","200","201","248","596","564","626","470",
+            "628","598"
+    };
+    private String mountains[] = {
+            "405","369","329","289","245","199","154","115","116","635","605","573",
+            "543","252","206","161","162","163","209","253","254","575","607","638",
+            "608","639", "368", "288","4","3","9","8","22","40","66","68","100","136",
+            "330","331","81","82","117"
+    };
+    private String water[] = {
+            "315","273","314","353","313","426","427","460",
+            "492","269","267","309","347","305","303","345","383","574","606","637","636","391",
+            "461","390","272","307","265","263","343","352","381","416","450","482","451","380",
+            "417","512","5","1","2","10","24","42","44","70","669","627","597","565","534","502",
+            "533","501"
+    };
     //private boolean moveAvail;
     //private boolean opponentPosition;
     //private boolean myPosition;
@@ -67,14 +88,29 @@ public class Hexagon implements Serializable {
     }
 
     public void drawHexagon(Graphics2D g2d) {
+        for(int i = 0; i < trees.length; i++){
+            if(id.equalsIgnoreCase(trees[i]))
+                groundType = GroundType.TREE;
+        }
+        for(int i = 0; i < mountains.length; i++){
+            if(id.equalsIgnoreCase(mountains[i]))
+                groundType = GroundType.MOUNTAIN;
+        }
+        for(int i = 0; i < water.length; i++){
+            if(id.equalsIgnoreCase(water[i]))
+                groundType = GroundType.WATER;
+        }
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        g2d.setColor(Colour.BLUE_DARK.darker());
-        g2d.setStroke(new BasicStroke(2f));
-        g2d.draw(hexagon);
+        g2d.setColor(Colour.GREEN_DARK);
+        g2d.setStroke(new BasicStroke(1));
+        //g2d.draw(hexagon);
+        g2d.setColor(Colour.BROWN);
+        //g2d.drawString(id, hexagon.getBounds().x +15, hexagon.getBounds().y + 20);
+        if(groundType == GroundType.GRASS) return;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f));
         g2d.setBackground(BACKGROUND_COLOR);
-        g2d.fill(hexagon);
+        //g2d.fill(hexagon);
         TexturePaint texture = getTexturePaint();
         g2d.setPaint(texture);
         g2d.fill(hexagon);
@@ -119,6 +155,8 @@ public class Hexagon implements Serializable {
         setBounds(hexagon.getBounds2D());
         this.center = c;
         this.side = side;
+        this.xPixel = xPixel;
+        this.yPixel = yPixel;
     }
 
     public double getSide(){

@@ -1,9 +1,10 @@
 package vn.edu.rmit.Utilities;
 
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Dimension2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
 
@@ -26,10 +27,13 @@ public class CustomButton extends JPanel{
     private Color backgroundColor;
     private Color foregroundColor;
     private Color hoverBackground;
+    private Color strokeColor;
     private String text;
     private boolean isActive;
     private Font font;
     private Stroke s;
+    private float strokeSize;
+    private Color temp;
 
     /**
      * Constructor
@@ -44,6 +48,8 @@ public class CustomButton extends JPanel{
         this.text = text;
         this.foregroundColor = Colour.BLUE_LIGHT;
         this.hoverBackground = Colour.BLUE_MIDDLE;
+        this.strokeColor = Colour.BLUE_LIGHT;
+        this.strokeSize = 2.5f;
         this.setOpaque(false);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.isActive = true;
@@ -51,7 +57,24 @@ public class CustomButton extends JPanel{
         this.arcH = ARCH;
         this.arcW = ARCW;
         this.font = new Font("Century Gothic", Font.BOLD, 17);
+        this.setFocusable(true);
         addMouseListener(new CustomButtonEvent(backgroundColor, hoverBackground));
+        addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+                temp = strokeColor;
+                strokeColor = Colour.BLUE_MIDDLE.brighter();
+                repaint();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                strokeColor = temp;
+                repaint();
+            }
+        });
     }
 
     /**
@@ -85,6 +108,10 @@ public class CustomButton extends JPanel{
 
     public double getButtonWidth(){
         return width;
+    }
+
+    public double getButtonHeight(){
+        return height;
     }
 
     /**
@@ -166,11 +193,20 @@ public class CustomButton extends JPanel{
     }
 
     /**
+     * Set stroke size
+     * @param f
+     */
+    public void setStrokeSize(float f){
+        this.strokeSize = f;
+    }
+
+    /**
      * Set button's stroke
      * @param s
      */
-    public void setStroke(Stroke s){
+    public void setStroke(Stroke s, Color c){
         this.s = s;
+        this.strokeColor = c;
     }
 
     /**
@@ -183,9 +219,9 @@ public class CustomButton extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if(s==null){
-            s = new BasicStroke(2.8f);
+            s = new BasicStroke(strokeSize);
         }
-        g2d.setColor(Colour.BLUE_MIDDLE);
+        g2d.setColor(strokeColor);
         g2d.setStroke(s);
         RoundRectangle2D roundRectangle2D = new RoundRectangle2D.Double();
         roundRectangle2D.setRoundRect(x, y, width, height, arcW, arcH);

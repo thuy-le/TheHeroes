@@ -11,6 +11,7 @@ public enum GroundType {
     MOUNTAIN("Mountain", ImagePath.MOUNTAIN),
     HOLE("Hole", ImagePath.HOLE),
     WATER("Water", ImagePath.WATER),
+    TREE("Tree", ImagePath.TREE),
     WARRIOR1("Warrior1", ImagePath.W1),
     WARRIOR2("Warrior1", ImagePath.W2),
     MOVE_AVAIL("Move Available", ImagePath.MOVE_AVAIL);
