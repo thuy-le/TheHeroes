@@ -6,10 +6,13 @@ import vn.edu.rmit.Model.Hero.Hero;
 import vn.edu.rmit.Utilities.GroundType;
 import vn.edu.rmit.Utilities.HexGrid;
 import vn.edu.rmit.Utilities.Hexagon;
+import vn.edu.rmit.Utilities.HexagonType;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +61,21 @@ public class MapController {
                 }
             }
         }
+    }
+
+    private List<Hexagon> findPath(List<Hexagon> hexes, Hexagon prev, Hexagon next){
+        List<Hexagon> path = new ArrayList<Hexagon>();
+        Point2D.Double current = prev.getCenter();
+        for (int i = 0; i < 6; i++) {
+            double radian = Math.toRadians(60) * i;
+            if (hexGrid.getHexagonType() != HexagonType.POINTY) radian += Math.toRadians(30);
+            Double x = current.getX() + prev.getSide() * Math.cos(radian);
+            Double y = current.getY() + prev.getSide() * Math.sin(radian);
+            Point2D.Double point = new Point2D.Double(x, y);
+            double distance = 0;
+
+        }
+        return path;
     }
 
     private class MoveOnClick extends MouseAdapter {

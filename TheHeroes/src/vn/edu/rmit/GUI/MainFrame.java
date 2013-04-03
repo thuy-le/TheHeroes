@@ -35,6 +35,7 @@ public class MainFrame extends JFrame implements Observer {
     private JLabel status;
     private ApplicationContext ctx;
     private GamePane gamePane;
+    private LoginForm loginForm;
 
     /**
      * Constructor
@@ -63,13 +64,15 @@ public class MainFrame extends JFrame implements Observer {
         map = (HexGrid) ctx.getBean("HexGrid");
         exit = (CustomButton) ctx.getBean("Button");
         gamePane = (GamePane) ctx.getBean("GamePane");
+        loginForm = new LoginForm();
         setLayout();
         /*
         Adding components
          */
-        add(exit, "0, 0"); //col,row
-        add(map, "0, 1");
-        add(gamePane, "0, 2");
+        //add(exit, "0, 0"); //col,row
+        //add(map, "0, 1");
+        //add(gamePane, "0, 2");
+        add(loginForm, "0, 1");
         configAppearance();
         /*
         Frame configuration
@@ -134,11 +137,6 @@ public class MainFrame extends JFrame implements Observer {
      */
     private int getFrameWidth() {
         return this.width;
-    }
-
-    public void setMoveAction(MouseAdapter moveAction) {
-        List<Avatar> buttons = gamePane.getButtons();
-        buttons.get(0).addMouseListener(moveAction);
     }
 
     public JTextField getTextField() {

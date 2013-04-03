@@ -45,7 +45,6 @@ public class GameEngine extends Observable {
                 } else if (((String) message).equalsIgnoreCase("newcreated")) {
                     newCreated = true;
                 } else {
-                    System.out.println(message.toString().length());
                     chatMSG = message.toString();
                 }
                 notifyObservers();

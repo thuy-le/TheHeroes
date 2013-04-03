@@ -38,7 +38,6 @@ public class HexGrid extends JPanel implements Observer {
         this.hexagons = new ArrayList<Hexagon>();
         this.type = type;
         ctx = ApplicationContextUtils.getApplicationContext();
-        System.out.println("Hex grid");
         this.setOpaque(false);
         isInit = false;
     }
@@ -206,6 +205,10 @@ public class HexGrid extends JPanel implements Observer {
     Getter - Setter
     */
 
+    public HexagonType getHexagonType(){
+        return type;
+    }
+
     public List<Hexagon> getHexagons() {
         return hexagons;
     }
@@ -233,7 +236,6 @@ public class HexGrid extends JPanel implements Observer {
                 isInit = true;
             }
             if(((GameEngine) o).isNewCreated()){
-                System.out.println("new clea");
                 model.writeOpponentPosition(myPosition);
                 ((GameEngine) o).setNewCreated(false);
             }

@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 4/1/13
  * Time: 8:27 PM
  */
-public class GamePane extends CustomPanel{
+public class GamePane extends CustomPanel {
     private final int WIDTH = 1280;
     private JLabel heroName;
     private java.util.List<Avatar> buttons;
@@ -26,19 +26,20 @@ public class GamePane extends CustomPanel{
     private Avatar heroAvatar;
     private CustomPanel actionPanel;
     private CustomPanel chatPanel;
-    private String playerName;
     private CustomPanel textHolder;
     private JScrollPane sp;
     private JLabel status;
 
-    public GamePane(){
+    public GamePane() {
         init();
     }
-    private void init(){
+
+    private void init() {
         heroDetailPanel = new CustomPanel();
         actionPanel = new CustomPanel();
         chatPanel = new CustomPanel();
         setLayout();
+        status = new JLabel("Strign stataus");
         heroAvatar = new Avatar();
         heroName = new JLabel(" Hero's name");
         String actionIMGs[] = {ImagePath.MOVE, ImagePath.ATTACK, ImagePath.DEFENSE, ImagePath.SKIP};
@@ -60,14 +61,14 @@ public class GamePane extends CustomPanel{
         chatPanel.add(textHolder);
         heroDetailPanel.add(heroName, "0, 0");
         heroDetailPanel.add(actionPanel, "0, 1");
-        heroDetailPanel.add(actionPanel, "0, 2");
+        heroDetailPanel.add(status, "0, 2");
         add(heroAvatar, "0, 0");
         add(heroDetailPanel, "1, 0");
         add(chatPanel, "2,0");
         uiConfig();
     }
 
-    private void uiConfig(){
+    private void uiConfig() {
         /*Bottom Panel*/
         setPanelSize(WIDTH - 40, 120);
         setPosition(WIDTH / 2 - getPanelSize().width / 2, 3);
@@ -107,7 +108,7 @@ public class GamePane extends CustomPanel{
         textField.setForeground(Colour.BLUE_DARK.darker());
         textField.setFont(new Font("Century Gothic", Font.BOLD, 13));
         JScrollBar sb = sp.getVerticalScrollBar();
-        sb.setUI(new MyScrollBarUI());
+        sb.setUI(new MyScrollBarUI(12, 120));
         sp.getViewport().setOpaque(false);
         sp.getViewport().setBorder(null);
         sp.setBorder(null);
@@ -115,19 +116,15 @@ public class GamePane extends CustomPanel{
         sp.setOpaque(false);
     }
 
-    private void setLayout(){
+    private void setLayout() {
         double bottomPanelLayout[][] = {{120, 250, TableLayout.FILL}, //cols
                 {TableLayout.FILL}}; //rows
         setLayout(new TableLayout(bottomPanelLayout));
         double heroDetailLayout[][] = {{TableLayout.FILL}, //cols
-                {30, TableLayout.FILL, 20}}; //rows
+                {30, TableLayout.FILL, 30}}; //rows
         heroDetailPanel.setLayout(new TableLayout(heroDetailLayout));
         actionPanel.setLayout(new FlowLayout());
         chatPanel.setLayout(new FlowLayout());
-    }
-
-    public JLabel getHeroName() {
-        return heroName;
     }
 
     public void setHeroName(String heroName) {
@@ -138,32 +135,12 @@ public class GamePane extends CustomPanel{
         return buttons;
     }
 
-    public void setButtons(List<Avatar> buttons) {
-        this.buttons = buttons;
-    }
-
     public JTextArea getTextArea() {
         return textArea;
     }
 
-    public void setTextArea(JTextArea textArea) {
-        this.textArea = textArea;
-    }
-
     public JTextField getTextField() {
         return textField;
-    }
-
-    public void setTextField(JTextField textField) {
-        this.textField = textField;
-    }
-
-    public CustomPanel getHeroDetailPanel() {
-        return heroDetailPanel;
-    }
-
-    public void setHeroDetailPanel(CustomPanel heroDetailPanel) {
-        this.heroDetailPanel = heroDetailPanel;
     }
 
     public Avatar getHeroAvatar() {
@@ -174,59 +151,26 @@ public class GamePane extends CustomPanel{
         this.heroAvatar.setImagePath(heroAvatar);
     }
 
-    public CustomPanel getActionPanel() {
-        return actionPanel;
-    }
-
-    public void setActionPanel(CustomPanel actionPanel) {
-        this.actionPanel = actionPanel;
-    }
-
-    public CustomPanel getChatPanel() {
-        return chatPanel;
-    }
-
-    public void setChatPanel(CustomPanel chatPanel) {
-        this.chatPanel = chatPanel;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public CustomPanel getTextHolder() {
-        return textHolder;
-    }
-
-    public void setTextHolder(CustomPanel textHolder) {
-        this.textHolder = textHolder;
-    }
-
-    public JScrollPane getSp() {
-        return sp;
-    }
-
-    public void setSp(JScrollPane sp) {
-        this.sp = sp;
-    }
-
-    public JLabel getStatus() {
-        return status;
-    }
-
-    public void setStatus(JLabel status) {
-        this.status = status;
-    }
-
-    public void appendText(String text){
+    public void appendText(String text) {
         this.textArea.append(text);
     }
 
-    public void setTextAreaCaretPosition(int length){
+    public void setTextAreaCaretPosition(int length) {
         this.textArea.setCaretPosition(length);
     }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setStroke(new BasicStroke(1));
+        g2d.setColor(Colour.BLUE_LIGHT);
+        g2d.drawRoundRect(0, 0, 500, 500, 20, 20);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+        g2d.setColor(Colour.GREY_MIDDLE);
+        g2d.fillRoundRect(0, 0, 500, 500, 20, 20);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+    }
+
 }

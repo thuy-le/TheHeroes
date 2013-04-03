@@ -12,7 +12,6 @@ public class Server {
     private ObjectOutputStream oos;
 
     public Server(Socket socket, ObjectInputStream ois, ObjectOutputStream oos) {
-        System.out.println("Called");
         this.socket = socket;
         this.ois = ois;
         this.oos = oos;
